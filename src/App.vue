@@ -1,7 +1,6 @@
 <template>
-  <h1>hello</h1>
-  <Forecast />
+  <WeatherCard />
 </template>
 <script setup>
-import Forecast from './components/Forecast.vue';
+import WeatherCard from './components/WeatherCard.vue';
 </script>

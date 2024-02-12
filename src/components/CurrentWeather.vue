@@ -29,7 +29,7 @@ const { data, error, isLoading } = useFetch(apiUrl);
 
 watchEffect(() => {
   if (data.value) {
-    store.updateForecastData(data.value);
+    store.updateWeatherData(data.value);
   }
 });
 </script>
@@ -38,11 +38,11 @@ watchEffect(() => {
   <div v-if="isLoading">Loading weather data...</div>
   <div v-else-if="error">Error: {{ error }}</div>
   <div v-else>
-    <h2>Weather Forecast for {{ city }}</h2>
-    <div v-if="store.weatherData.list">
-      <div v-for="(entry, index) in store.weatherData.list" :key="index">
-        <p>{{ entry.dt_txt }}: {{ entry.main.temp }}°C</p>
-      </div>
+    <h1>{{ city }}</h1>
+    <div v-if="store.weatherData">
+      <h1>{{ `${store.weatherData.main.temp}°` }}</h1>
+      <h3>{{ store.weatherData.weather[0].main }}</h3>
+      <p>{{ `L:${store.weatherData.main.temp_min}° H:${store.weatherData.main.temp_min}°` }}</p>
     </div>
     <div v-else>No weather data available.</div>
   </div>
