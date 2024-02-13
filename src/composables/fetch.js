@@ -28,6 +28,7 @@ export function useFetch(url) {
       }
       const json = await response.json();
       data.value = json;
+      console.log(data.value);
     } catch (err) {
       error.value = err;
     } finally {

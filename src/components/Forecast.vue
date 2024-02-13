@@ -19,7 +19,7 @@ const store = useWeatherStore();
  * This will automatically update if any reactive dependencies change.
  */
 const apiUrl = computed(
-  () => `${WEATHER_BASE_URL}weather?q=${city.value}&appid=${WEATHER_API}&units=${units}`
+  () => `${WEATHER_BASE_URL}forecast?q=${city.value}&appid=${WEATHER_API}&units=${units}`
 );
 /**
  * Fetches data from the API using the computed apiUrl and updates the Pinia store with the response.
@@ -32,18 +32,66 @@ watchEffect(() => {
     store.updateForecastData(data.value);
   }
 });
+const getDayAbbreviation = (date) => {
+  const dayIndex = date.getDay();
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return dayNames[dayIndex];
+};
+const todayForecastDataList = computed(() => {
+  return (
+    store.forecastData.list?.slice(0, 9).map((entry) => {
+      const entryDate = new Date(entry.dt_txt);
+      return {
+        id: Math.floor(Math.random() * 100000),
+        hour: entryDate.getHours(),
+        temp: entry.main.temp
+      };
+    }) || []
+  );
+});
+const fiveDaysForecastDataList = computed(() => {
+  const todayString = new Date().toDateString();
+  const groupedByDay = store.forecastData.list?.reduce((acc, entry) => {
+    const date = new Date(entry.dt_txt);
+    const dayKey = date.toDateString(); // Unique key for each day
+    const dayAbbreviation = getDayAbbreviation(date);
+
+    if (!acc[dayKey]) {
+      acc[dayKey] = {
+        id: date.toISOString(),
+        day: dayKey === todayString ? 'Today' : dayAbbreviation,
+        min: entry.main.temp_min,
+        max: entry.main.temp_max
+      };
+    } else {
+      acc[dayKey].min = Math.min(acc[dayKey].min, entry.main.temp_min);
+      acc[dayKey].max = Math.max(acc[dayKey].max, entry.main.temp_max);
+    }
+
+    return acc;
+  }, {});
+
+  // Convert the accumulated object into an array and return it
+  return Object.values(groupedByDay);
+});
 </script>
 
 <template>
-  <div v-if="isLoading">Loading weather data...</div>
+  <div v-if="isLoading">Loading Forecast...</div>
   <div v-else-if="error">Error: {{ error }}</div>
   <div v-else>
-    <h2>Weather Forecast for {{ city }}</h2>
-    <div v-if="store.weatherData.list">
-      <div v-for="(entry, index) in store.weatherData.list" :key="index">
-        <p>{{ entry.dt_txt }}: {{ entry.main.temp }}°C</p>
+    <div v-if="todayForecastDataList">
+      <h2>24 hours forecast for {{ city }}</h2>
+      <div v-for="entry in todayForecastDataList" :key="entry.id">
+        <p>{{ entry.hour }}: {{ entry.temp }}°</p>
       </div>
     </div>
     <div v-else>No weather data available.</div>
+    <div v-if="fiveDaysForecastDataList">
+      <h2>5 days forecast for {{ city }}</h2>
+      <div v-for="entry in fiveDaysForecastDataList" :key="entry.id">
+        <p>{{ entry.day }}: {{ entry.min }}° {{ entry.max }}°</p>
+      </div>
+    </div>
   </div>
 </template>

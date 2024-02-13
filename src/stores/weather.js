@@ -19,6 +19,7 @@ export const useWeatherStore = defineStore('weather', () => {
   }
   function updateForecastData(data) {
     forecastData.value = data;
+    console.log(forecastData.value);
   }
 
   function updateMapData(data) {
