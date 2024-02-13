@@ -37,6 +37,15 @@ const getDayAbbreviation = (date) => {
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   return dayNames[dayIndex];
 };
+function getIconUrl(iconCode) {
+  console.log(iconCode);
+  return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+}
+
+function getNightIconUrl(iconCode) {
+  const trimmedIcon = iconCode.slice(0, -1);
+  return `https://openweathermap.org/img/wn/${trimmedIcon}d@2x.png`;
+}
 const todayForecastDataList = computed(() => {
   return (
     store.forecastData.list?.slice(0, 9).map((entry) => {
@@ -44,7 +53,8 @@ const todayForecastDataList = computed(() => {
       return {
         id: Math.floor(Math.random() * 100000),
         hour: entryDate.getHours(),
-        temp: entry.main.temp
+        temp: entry.main.temp,
+        icon: entry.weather[0].icon
       };
     }) || []
   );
@@ -61,7 +71,8 @@ const fiveDaysForecastDataList = computed(() => {
         id: date.toISOString(),
         day: dayKey === todayString ? 'Today' : dayAbbreviation,
         min: entry.main.temp_min,
-        max: entry.main.temp_max
+        max: entry.main.temp_max,
+        icon: entry.weather[0].icon
       };
     } else {
       acc[dayKey].min = Math.min(acc[dayKey].min, entry.main.temp_min);
@@ -84,6 +95,7 @@ const fiveDaysForecastDataList = computed(() => {
       <h2>24 hours forecast for {{ city }}</h2>
       <div v-for="entry in todayForecastDataList" :key="entry.id">
         <p>{{ entry.hour }}: {{ entry.temp }}°</p>
+        <img :src="getIconUrl(entry.icon)" alt="Weather icon" />
       </div>
     </div>
     <div v-else>No weather data available.</div>
@@ -91,6 +103,7 @@ const fiveDaysForecastDataList = computed(() => {
       <h2>5 days forecast for {{ city }}</h2>
       <div v-for="entry in fiveDaysForecastDataList" :key="entry.id">
         <p>{{ entry.day }}: {{ entry.min }}° {{ entry.max }}°</p>
+        <img :src="getNightIconUrl(entry.icon)" alt="" />
       </div>
     </div>
   </div>

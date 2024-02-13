@@ -40,6 +40,7 @@ watchEffect(() => {
   <div v-else>
     <h1>{{ city }}</h1>
     <div v-if="store.weatherData">
+      <img :src="store.weatherIconUrl" alt="" />
       <h1>{{ `${store.weatherData.main.temp}°` }}</h1>
       <h3>{{ store.weatherData.weather[0].main }}</h3>
       <p>{{ `L:${store.weatherData.main.temp_min}° H:${store.weatherData.main.temp_min}°` }}</p>

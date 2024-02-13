@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 /**
  * Pinia store that manages weather data.
@@ -25,12 +25,26 @@ export const useWeatherStore = defineStore('weather', () => {
   function updateMapData(data) {
     mapData.value = data;
   }
+
+  function getWeatherIcon(data) {
+    if (data.value.weather.length > 1) {
+      const lastItem = data.value.weather[data.value.weather.length - 1].icon;
+      return `https://openweathermap.org/img/wn/${lastItem}@2x.png`;
+    } else return `https://openweathermap.org/img/wn/${data.value.weather[0].icon}@2x.png`;
+  }
+
+  const weatherIconUrl = computed(() => {
+    return getWeatherIcon(weatherData);
+  });
+
   return {
     weatherData,
     forecastData,
     mapData,
+    weatherIconUrl,
     updateWeatherData,
     updateForecastData,
-    updateMapData
+    updateMapData,
+    getWeatherIcon
   };
 });
