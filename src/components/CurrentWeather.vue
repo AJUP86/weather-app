@@ -35,16 +35,20 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div v-if="isLoading">Loading weather data...</div>
-  <div v-else-if="error">Error: {{ error }}</div>
-  <div v-else>
-    <h1>{{ city }}</h1>
-    <div v-if="store.weatherData">
-      <img :src="store.weatherIconUrl" alt="" />
-      <h1>{{ `${store.weatherData.main.temp}°` }}</h1>
-      <h3>{{ store.weatherData.weather[0].main }}</h3>
-      <p>{{ `L:${store.weatherData.main.temp_min}° H:${store.weatherData.main.temp_min}°` }}</p>
+  <div class="p-5 max-w-sm bg-white rounded-lg border shadow-md">
+    <div v-if="isLoading" class="animate-pulse">Loading weather data...</div>
+    <div v-else-if="error" class="text-red-500">{{ error }}</div>
+    <div v-else class="text-center">
+      <h1 class="text-xl font-bold">{{ city }}</h1>
+      <div v-if="store.weatherData" class="my-4">
+        <img :src="store.weatherIconUrl" alt="Weather icon" class="mx-auto" />
+        <h1 class="text-4xl font-semibold">{{ `${store?.weatherData.main.temp}°` }}</h1>
+        <h3 class="text-md text-gray-700">{{ store.weatherData.weather[0].main }}</h3>
+        <p class="text-sm text-gray-500">
+          {{ `L:${store.weatherData.main.temp_min}° H:${store.weatherData.main.temp_min}°` }}
+        </p>
+      </div>
+      <div v-else>No weather data available.</div>
     </div>
-    <div v-else>No weather data available.</div>
   </div>
 </template>

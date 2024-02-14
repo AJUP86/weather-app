@@ -88,22 +88,35 @@ const fiveDaysForecastDataList = computed(() => {
 </script>
 
 <template>
-  <div v-if="isLoading">Loading Forecast...</div>
-  <div v-else-if="error">Error: {{ error }}</div>
-  <div v-else>
-    <div v-if="todayForecastDataList">
-      <h2>24 hours forecast for {{ city }}</h2>
-      <div v-for="entry in todayForecastDataList" :key="entry.id">
-        <p>{{ entry.hour }}: {{ entry.temp }}°</p>
-        <img :src="getIconUrl(entry.icon)" alt="Weather icon" />
+  <div
+    class="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-md space-y-4"
+  >
+    <div v-if="isLoading" class="text-gray-500">Loading Forecast...</div>
+    <div v-else-if="error" class="text-red-500">{{ error }}</div>
+    <div v-else class="w-full">
+      <h2 class="text-xl font-semibold text-gray-800">24 hours forecast for {{ city }}</h2>
+      <div class="flex flex-wrap justify-around gap-4 mt-4">
+        <div
+          v-for="entry in todayForecastDataList"
+          :key="entry.id"
+          class="flex flex-col items-center p-2 bg-blue-100 rounded-lg"
+        >
+          <img :src="getIconUrl(entry.icon)" alt="Weather icon" class="w-16 h-16" />
+          <p class="text-lg font-medium text-gray-700">{{ entry.hour }}:00</p>
+          <p class="text-lg text-gray-800">{{ entry.temp }}°</p>
+        </div>
       </div>
-    </div>
-    <div v-else>No weather data available.</div>
-    <div v-if="fiveDaysForecastDataList">
-      <h2>5 days forecast for {{ city }}</h2>
-      <div v-for="entry in fiveDaysForecastDataList" :key="entry.id">
-        <p>{{ entry.day }}: {{ entry.min }}° {{ entry.max }}°</p>
-        <img :src="getNightIconUrl(entry.icon)" alt="" />
+      <h2 class="text-xl font-semibold text-gray-800 mt-6">5 days forecast for {{ city }}</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mt-4">
+        <div
+          v-for="entry in fiveDaysForecastDataList"
+          :key="entry.id"
+          class="flex flex-col items-center p-2 bg-blue-200 rounded-lg"
+        >
+          <img :src="getNightIconUrl(entry.icon)" alt="Weather icon" class="w-16 h-16" />
+          <p class="text-lg font-medium text-gray-700">{{ entry.day }}</p>
+          <p class="text-sm text-gray-600">{{ `Min ${entry.min}° / Max ${entry.max}°` }}</p>
+        </div>
       </div>
     </div>
   </div>
