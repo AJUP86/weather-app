@@ -1,7 +1,8 @@
 <template>
-  <main class="min-h-screen bg-blue-50 py-8">
-    <WeatherCard />
-    <WeatherCard />
+  <main class="min-h-screen py-8">
+    <WeatherCard city="Amsterdam" />
+    <WeatherCard city="New York" />
+    <WeatherCard city="Toronto" />
   </main>
 </template>
 

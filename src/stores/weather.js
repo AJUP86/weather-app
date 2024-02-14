@@ -7,44 +7,44 @@ import { computed, ref } from 'vue';
  */
 
 export const useWeatherStore = defineStore('weather', () => {
-  const weatherData = ref([]);
-  const forecastData = ref(null);
-  const mapData = ref(null);
+  const weatherDataByCity = ref({});
+  const forecastDataByCity = ref({});
   /**
    * Updates the weatherData state with new data.
    * @param {object} newData - The new weather data to update the state with.
    */
-  function updateWeatherData(data) {
-    weatherData.value = data;
-  }
-  function updateForecastData(data) {
-    forecastData.value = data;
-    console.log(forecastData.value);
+  function updateWeatherData(city, newData) {
+    weatherDataByCity.value[city] = newData;
   }
 
-  function updateMapData(data) {
-    mapData.value = data;
+  function updateForecastData(city, newData) {
+    forecastDataByCity.value[city] = newData;
   }
 
-  function getWeatherIcon(data) {
-    if (data.value.weather.length > 1) {
-      const lastItem = data.value.weather[data.value.weather.length - 1].icon;
-      return `https://openweathermap.org/img/wn/${lastItem}@2x.png`;
-    } else return `https://openweathermap.org/img/wn/${data.value.weather[0].icon}@2x.png`;
+  function getWeatherData(city) {
+    return weatherDataByCity.value[city] || null;
   }
 
-  const weatherIconUrl = computed(() => {
-    return getWeatherIcon(weatherData);
-  });
+  function getForecastData(city) {
+    return forecastDataByCity.value[city] || null;
+  }
+
+  function getWeatherIconUrl(city) {
+    const data = weatherDataByCity.value[city];
+    if (data && data.weather && data.weather.length > 0) {
+      const iconCode = data.weather[0].icon;
+      return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    }
+    return '';
+  }
 
   return {
-    weatherData,
-    forecastData,
-    mapData,
-    weatherIconUrl,
+    weatherDataByCity,
+    forecastDataByCity,
     updateWeatherData,
     updateForecastData,
-    updateMapData,
-    getWeatherIcon
+    getWeatherData,
+    getForecastData,
+    getWeatherIconUrl
   };
 });

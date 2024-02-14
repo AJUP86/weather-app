@@ -4,17 +4,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        sky: {
-          primary: '#007BFF',
-          light: '#59CBE8'
-        },
-        sun: '#FFD700',
-        storm: '#6C757D',
-        rain: '#325C74',
-        sunset: '#FFA07A',
-        night: '#34495E',
-        cloud: '#ECF0F1',
-        danger: '#DC3545'
+        primary: '#2C3E50', // Dark shade of blue
+        secondary: '#8E44AD', // Shade of purple
+        light: '#e1a4e3', // Light purple
+        background: '#f4f4f8', // Off-white background
+        text: '#333333', // Primary text color
+        accent: '#3498db', // Bright accent color
+        error: '#e74c3c', // Error color
+        success: '#2ecc71', // Success color
+        info: '#3498db', // Information color
+        warning: '#f1c40f', // Warning color
+        lightGray: '#ecf0f1', // Light gray
+        darkGray: '#95a5a6', // Dark gray
+        border: '#dcdde1' // Border color
+      },
+      // If you need gradients, add them here
+      backgroundImage: {
+        'gradient-to-r': 'linear-gradient(to right, var(--color-background), var(--color-light))'
       }
     }
   },

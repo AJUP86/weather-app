@@ -1,20 +1,24 @@
 /* base.css */
 :root {
-  --color-sky-primary: #007bff;
-  --color-sky-light: #59cbe8;
-  --color-sun: #ffd700;
-  --color-storm: #6c757d;
-  --color-rain: #325c74;
-  --color-sunset: #ffa07a;
-  --color-night: #34495e;
-  --color-cloud: #ecf0f1;
-  --color-danger: #dc3545;
+  --color-primary: #2c3e50; /* A dark shade of blue, similar to the website's header */
+  --color-secondary: #8e44ad; /* A shade of purple */
+  --color-light: #deb6df; /* Light purple for backgrounds or lighter elements */
+  --color-background: #f4f4f8; /* Off-white background, adjust as needed */
+  --color-text: #333333; /* Primary text color, usually dark for readability */
+  --color-accent: #3498db; /* A bright accent color, adjust as needed */
+  --color-error: #e74c3c; /* Color used for errors or warnings */
+  --color-success: #2ecc71; /* Color used for success messages */
+  --color-info: #3498db; /* Color used for informational messages */
+  --color-warning: #f1c40f; /* Color used for warning messages */
+  --color-light-gray: #ecf0f1; /* Light gray for card backgrounds or UI elements */
+  --color-dark-gray: #95a5a6; /* Dark gray for less emphasized text */
+  --color-border: #dcdde1; /* Border color for dividing elements */
 }
 
 body {
-  background-color: var(--color-cloud); /* Light grey background */
-  color: var(--color-night); /* Dark blue text for contrast */
-  font-family: 'Open Sans', Arial, sans-serif; /* Common font choice for modern UI */
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Open Sans', Arial, sans-serif;
 }
 
 h1,
@@ -23,29 +27,47 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--color-sky-primary); /* Primary color for headings */
+  color: var(--color-primary);
 }
 
 a {
-  color: var(--color-sunset); /* Sunset color for links */
-  text-decoration: none; /* No underline on links */
+  color: var(--color-accent);
+  text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline; /* Underline on hover for links */
+  text-decoration: underline;
 }
 
 button {
-  background-color: var(--color-sun); /* Sun yellow for buttons */
-  color: white; /* White text on buttons */
-  border: none; /* No border */
-  padding: 10px 20px; /* Padding inside buttons */
-  border-radius: 5px; /* Rounded corners for buttons */
-  cursor: pointer; /* Pointer cursor on hover */
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-  background-color: var(--color-sky-primary); /* Darker background on hover for buttons */
+  background-color: var(--color-primary);
 }
 
-/* Additional styles for other elements as needed */
+/* Utility class for error text */
+.text-error {
+  color: var(--color-error);
+}
+
+/* Utility class for success text */
+.text-success {
+  color: var(--color-success);
+}
+
+/* Utility class for info text */
+.text-info {
+  color: var(--color-info);
+}
+
+/* Utility class for warning text */
+.text-warning {
+  color: var(--color-warning);
+}
