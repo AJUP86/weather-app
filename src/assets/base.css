@@ -2,7 +2,7 @@
 :root {
   --color-primary: #2c3e50; /* A dark shade of blue, similar to the website's header */
   --color-secondary: #8e44ad; /* A shade of purple */
-  --color-light: #deb6df; /* Light purple for backgrounds or lighter elements */
+  --color-light: #deb6df; /* Light pink for backgrounds or lighter elements */
   --color-background: #f4f4f8; /* Off-white background, adjust as needed */
   --color-text: #333333; /* Primary text color, usually dark for readability */
   --color-accent: #3498db; /* A bright accent color, adjust as needed */
@@ -52,22 +52,18 @@ button:hover {
   background-color: var(--color-primary);
 }
 
-/* Utility class for error text */
 .text-error {
   color: var(--color-error);
 }
 
-/* Utility class for success text */
 .text-success {
   color: var(--color-success);
 }
 
-/* Utility class for info text */
 .text-info {
   color: var(--color-info);
 }
 
-/* Utility class for warning text */
 .text-warning {
   color: var(--color-warning);
 }

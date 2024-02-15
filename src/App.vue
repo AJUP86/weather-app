@@ -4,7 +4,6 @@
       <WeatherCard city="Amsterdam" />
       <WeatherCard city="Managua" />
       <WeatherCard city="Tokio" />
-      <!-- Add more cards as needed -->
     </div>
   </main>
 </template>

@@ -7,7 +7,7 @@ export default {
         primary: '#2C3E50', // Dark shade of blue
         secondary: '#8E44AD', // Shade of purple
         light: '#e1a4e3', // Light purple
-        background: '#f4f4f8', // Off-white background
+        background: '#f0ffff', // Off-white background
         text: '#333333', // Primary text color
         accent: '#3498db', // Bright accent color
         error: '#e74c3c', // Error color
@@ -18,7 +18,6 @@ export default {
         darkGray: '#95a5a6', // Dark gray
         border: '#dcdde1' // Border color
       },
-      // If you need gradients, add them here
       backgroundImage: {
         'gradient-to-r': 'linear-gradient(to right, var(--color-background), var(--color-light))'
       }

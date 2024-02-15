@@ -31,7 +31,7 @@ const weatherData = computed(() => store.getWeatherData(props.city));
 const weatherIconUrl = computed(() => store.getWeatherIconUrl(props.city));
 
 const isDay = computed(() => {
-  if (!weatherData.value) return true; // Default to day if no data
+  if (!weatherData.value) return true;
   const sunrise = new Date(weatherData.value.sys.sunrise * 1000);
   const sunset = new Date(weatherData.value.sys.sunset * 1000);
   const currentTime = new Date();
