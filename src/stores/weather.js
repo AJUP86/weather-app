@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 /**
  * Pinia store that manages weather data.
@@ -7,15 +7,44 @@ import { ref } from 'vue';
  */
 
 export const useWeatherStore = defineStore('weather', () => {
-  const weatherData = ref([]);
-
+  const weatherDataByCity = ref({});
+  const forecastDataByCity = ref({});
   /**
    * Updates the weatherData state with new data.
    * @param {object} newData - The new weather data to update the state with.
    */
-  function updateWeatherData(data) {
-    weatherData.value = data;
+  function updateWeatherData(city, newData) {
+    weatherDataByCity.value[city] = newData;
   }
-  console.log(weatherData.value);
-  return { weatherData, updateWeatherData };
+
+  function updateForecastData(city, newData) {
+    forecastDataByCity.value[city] = newData;
+  }
+
+  function getWeatherData(city) {
+    return weatherDataByCity.value[city] || null;
+  }
+
+  function getForecastData(city) {
+    return forecastDataByCity.value[city] || null;
+  }
+
+  function getWeatherIconUrl(city) {
+    const data = weatherDataByCity.value[city];
+    if (data && data.weather && data.weather.length > 0) {
+      const iconCode = data.weather[0].icon;
+      return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    }
+    return '';
+  }
+
+  return {
+    weatherDataByCity,
+    forecastDataByCity,
+    updateWeatherData,
+    updateForecastData,
+    getWeatherData,
+    getForecastData,
+    getWeatherIconUrl
+  };
 });
