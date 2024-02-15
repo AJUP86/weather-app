@@ -29,10 +29,52 @@ watch(
 
 const weatherData = computed(() => store.getWeatherData(props.city));
 const weatherIconUrl = computed(() => store.getWeatherIconUrl(props.city));
+
+const isDay = computed(() => {
+  if (!weatherData.value) return true; // Default to day if no data
+  const sunrise = new Date(weatherData.value.sys.sunrise * 1000);
+  const sunset = new Date(weatherData.value.sys.sunset * 1000);
+  const currentTime = new Date();
+  return currentTime > sunrise && currentTime < sunset;
+});
+
+const weatherBackground = computed(() => {
+  return isDay.value ? 'bg-day' : 'bg-night';
+});
+
+const weatherCondition = computed(() => {
+  if (!weatherData.value || !weatherData.value.weather || weatherData.value.weather.length === 0)
+    return '';
+  return weatherData.value.weather[0].main.toLowerCase();
+});
+
+const weatherConditionBackground = computed(() => {
+  switch (weatherCondition.value) {
+    case 'rain':
+      return 'bg-rain';
+    case 'clear':
+      return 'bg-clear-sky';
+    case 'snow':
+      return 'bg-snow';
+    case 'clouds':
+      return 'bg-scattered-clouds';
+    case 'thunderstorm':
+      return 'bg-thunderstorm';
+    case 'drizzle':
+      return 'bg-shower-rain';
+    case 'mist' || 'smoke' || 'haze' || 'dust' || 'fog' || 'sand' || 'ash' || 'squall' || 'tornado':
+      return 'bg-mist';
+    default:
+      return '';
+  }
+});
 </script>
 
 <template>
-  <div class="p-5 max-w-sm bg-white rounded-lg border shadow-md space-y-4">
+  <div
+    :class="[weatherBackground, weatherConditionBackground]"
+    class="p-5 bg-white overflow-hidden rounded-t-lg border shadow-md space-y-4"
+  >
     <div v-if="isLoading" class="animate-pulse text-gray-500">Loading weather data...</div>
     <div v-else-if="error" class="text-error">{{ error }}</div>
     <div v-else class="text-center">

@@ -49,10 +49,15 @@ const todayForecastDataList = computed(
     }) || []
 );
 const getDayAbbreviation = (date) => {
+  const today = new Date();
+  if (date.toDateString() === today.toDateString()) {
+    return 'Today';
+  }
   const dayIndex = date.getDay();
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   return dayNames[dayIndex];
 };
+
 const fiveDaysForecastDataList = computed(() => {
   const todayString = new Date().toDateString();
   const forecastByDay = {};
@@ -61,58 +66,71 @@ const fiveDaysForecastDataList = computed(() => {
     const entryDate = new Date(entry.dt_txt);
     const dayKey = entryDate.toDateString();
 
-    if (dayKey !== todayString) {
-      if (!forecastByDay[dayKey]) {
-        forecastByDay[dayKey] = {
-          id: entry.dt,
-          day: getDayAbbreviation(entryDate),
-          temps: [entry.main.temp_min, entry.main.temp_max],
-          icon: getNightIconUrl(entry.weather[0].icon)
-        };
-      } else {
-        forecastByDay[dayKey].temps.push(entry.main.temp_min, entry.main.temp_max);
-      }
+    if (dayKey === todayString || !forecastByDay[dayKey]) {
+      forecastByDay[dayKey] = {
+        id: entry.dt,
+        day: getDayAbbreviation(entryDate),
+        temps: [entry.main.temp_min, entry.main.temp_max],
+        icon: getIconUrl(entry.weather[0].icon)
+      };
+    } else {
+      forecastByDay[dayKey].temps.push(entry.main.temp_min, entry.main.temp_max);
     }
   });
 
-  return Object.values(forecastByDay).map((day) => ({
-    ...day,
-    min: Math.min(...day.temps),
-    max: Math.max(...day.temps)
-  }));
+  return Object.values(forecastByDay)
+    .slice(0, 5)
+    .map((day) => ({
+      ...day,
+      min: Math.min(...day.temps),
+      max: Math.max(...day.temps)
+    }));
 });
 </script>
 <template>
   <div
-    class="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-md space-y-4 bg-gradient-to-r from-primary to-secondary"
+    class="flex flex-col items-center justify-center p-4 bg-white bg-opacity-75 rounded-b-lg shadow-md space-y-4"
   >
     <div v-if="isLoading" class="text-gray-500">Loading Forecast...</div>
     <div v-else-if="error" class="text-red-500">{{ error }}</div>
     <div v-else class="w-full">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">
-        24 hours forecast for {{ props.city }}
-      </h2>
-      <div class="flex flex-wrap justify-around gap-4">
-        <div
-          v-for="entry in todayForecastDataList"
-          :key="entry.id"
-          class="flex flex-col items-center p-2 bg-blue-100 rounded-lg w-24 h-32"
-        >
-          <img :src="entry.icon" alt="Weather icon" class="w-16 h-16" />
-          <p class="text-lg font-medium text-gray-700">{{ entry.hour }}:00</p>
-          <p class="text-lg text-gray-800">{{ entry.temp }}°C</p>
+      <h2 class="text-lg md:text-xl lg:text-2xl">24 hours forecast.</h2>
+      <div class="flex space-x-2 overflow-x-auto py-4">
+        <div class="flex items-center space-x-1">
+          <div class="flex space-x-4 min-w-max">
+            <template
+              v-for="entry in todayForecastDataList"
+              :key="entry.id"
+              class="flex-none w-1/6 md:w-1/8 lg:w-1/10 flex flex-col items-center p-2"
+            >
+              <div class="flex flex-col items-center">
+                <img :src="entry.icon" alt="Weather icon" class="w-6 h-6" />
+                <div class="text-xs sm:text-sm md:text-base">
+                  <p>{{ entry.hour }}</p>
+                  <p>{{ entry.temp.toFixed(0) }}°</p>
+                </div>
+
+                <div class="h-1 w-px bg-primary"></div>
+              </div>
+            </template>
+          </div>
         </div>
       </div>
-      <h2 class="text-xl font-semibold text-gray-800 mt-6">5 days forecast for {{ props.city }}</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mt-4">
+
+      <h2 class="text-lg md:text-xl lg:text-2xl">5 days forecast</h2>
+      <div class="flex flex-col divide-y divide-gray-200">
         <div
           v-for="day in fiveDaysForecastDataList"
           :key="day.id"
-          class="flex flex-col items-center p-2 bg-blue-200 rounded-lg w-32 h-40"
+          class="py-2 flex justify-between items-center"
         >
-          <img :src="day.icon" alt="Weather icon" class="w-16 h-16" />
-          <p class="text-lg font-medium text-gray-700">{{ day.day }}</p>
-          <p class="text-sm text-gray-600">{{ `Min ${day.min}°C / Max ${day.max}°C` }}</p>
+          <div class="flex items-center">
+            <p class="text-lg font-medium text-gray-700 mr-4">{{ day.day }}</p>
+            <p class="text-sm text-gray-600">{{ `Min ${day.min.toFixed(1)}°` }}</p>
+            <span class="mx-1 text-gray-500">|</span>
+            <p class="text-sm text-gray-600">{{ `Max ${day.max.toFixed(1)}°` }}</p>
+          </div>
+          <img :src="day.icon" alt="Weather icon" class="w-10 h-10" />
         </div>
       </div>
     </div>

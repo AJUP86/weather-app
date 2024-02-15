@@ -9,10 +9,10 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="container mx-auto p-4">
-    <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-      <CurrentWeather :city="props.city" class="flex-grow" />
-      <Forecast :city="props.city" class="flex-grow" />
+  <div class="max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mx-auto">
+    <div class="flex flex-col overflow-hidden bg-white rounded-lg shadow-lg">
+      <CurrentWeather :city="props.city" />
+      <Forecast :city="props.city" />
     </div>
   </div>
 </template>
