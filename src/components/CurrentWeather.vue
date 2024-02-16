@@ -72,7 +72,7 @@ const weatherConditionBackground = computed(() => {
 
 <template>
   <div
-    :class="[weatherBackground, weatherConditionBackground]"
+    :class="[weatherConditionBackground]"
     class="p-5 bg-white overflow-hidden rounded-t-lg border shadow-md space-y-4"
   >
     <div v-if="isLoading" class="animate-pulse text-gray-500">Loading weather data...</div>

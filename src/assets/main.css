@@ -46,3 +46,22 @@
 .bg-night {
   background: linear-gradient(120deg, #2c3e50 0%, #000000 100%);
 }
+
+.dot {
+  transition: transform 0.3s ease-in-out;
+}
+#toggleC:checked ~ .dot {
+  transform: translateX(1.5rem);
+}
+
+.fas.fa-bars {
+  font-size: 1.5em; /* Adjust size as needed */
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
