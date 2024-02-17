@@ -10,7 +10,7 @@ export const useWeatherStore = defineStore('weather', () => {
   const weatherDataByCity = ref({});
   const forecastDataByCity = ref({});
   const isCelsius = ref(true);
-  const weatherCities = ref([]);
+  const weatherCities = ref(['amsterdam']);
 
   /**
    * Updates the weatherData state with new data.
