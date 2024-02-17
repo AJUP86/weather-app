@@ -110,8 +110,6 @@ const fiveDaysForecastDataList = computed(() => {
                   <p>{{ entry.hour }}</p>
                   <p>{{ entry.temp.toFixed(0) }}°</p>
                 </div>
-
-                <div class="h-1 w-px bg-primary"></div>
               </div>
             </template>
           </div>
