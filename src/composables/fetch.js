@@ -8,6 +8,7 @@ import { ref, watchEffect, toValue } from 'vue';
  */
 
 export function useFetch(url) {
+  console.log(url.value);
   const data = ref(null);
   const error = ref(null);
   const isLoading = ref(false);

@@ -9,9 +9,11 @@ const props = defineProps({
 
 const WEATHER_API = import.meta.env.VITE_WEATHER_API;
 const WEATHER_BASE_URL = import.meta.env.VITE_WEATHER_BASE_URL;
+const WEATHER_DATA = import.meta.env.VITE_WEATHER_DATA;
 const units = 'metric';
 const apiUrl = computed(
-  () => `${WEATHER_BASE_URL}forecast?q=${props.city}&appid=${WEATHER_API}&units=${units}`
+  () =>
+    `${WEATHER_BASE_URL}${WEATHER_DATA}forecast?q=${props.city}&appid=${WEATHER_API}&units=${units}`
 );
 
 const { data, error, isLoading } = useFetch(apiUrl);
