@@ -14,9 +14,6 @@ const store = useCityStore();
 const weatherStore = useWeatherStore();
 const apiUrl = computed(() => {
   if (searchQuery.value) {
-    console.log(
-      `${WEATHER_BASE_URL}${WEATHER_GEO}direct?q=${searchQuery.value}&limit=${5}&appid=${WEATHER_API}`
-    );
     return `${WEATHER_BASE_URL}${WEATHER_GEO}direct?q=${searchQuery.value}&limit=${5}&appid=${WEATHER_API}`;
   }
   return null;
@@ -28,12 +25,13 @@ watch(data, (newData) => {
     store.updateCities(newData);
   }
 });
-console.log(store.cities.value);
+watch(isCelsius, (newUnit) => {
+  weatherStore.updateUnits(newUnit);
+});
 const searchCity = (e) => {
   searchQuery.value = e.target.value;
 };
 const selectCity = (city) => {
-  console.log(city);
   store.setCurrentCity(city);
   weatherStore.updateWeatherCities(searchQuery.value);
   searchQuery.value = '';
