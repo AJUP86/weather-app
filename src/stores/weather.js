@@ -9,6 +9,9 @@ import { computed, ref } from 'vue';
 export const useWeatherStore = defineStore('weather', () => {
   const weatherDataByCity = ref({});
   const forecastDataByCity = ref({});
+  const isCelsius = ref(true);
+  const weatherCities = ref(['amsterdam']);
+
   /**
    * Updates the weatherData state with new data.
    * @param {object} newData - The new weather data to update the state with.
@@ -17,6 +20,12 @@ export const useWeatherStore = defineStore('weather', () => {
     weatherDataByCity.value[city] = newData;
   }
 
+  function updateUnits(newUnit) {
+    isCelsius.value = newUnit;
+  }
+  function updateWeatherCities(newCity) {
+    weatherCities.value.push(newCity);
+  }
   function updateForecastData(city, newData) {
     forecastDataByCity.value[city] = newData;
   }
@@ -39,10 +48,14 @@ export const useWeatherStore = defineStore('weather', () => {
   }
 
   return {
+    isCelsius,
     weatherDataByCity,
     forecastDataByCity,
+    weatherCities,
+    updateUnits,
     updateWeatherData,
     updateForecastData,
+    updateWeatherCities,
     getWeatherData,
     getForecastData,
     getWeatherIconUrl

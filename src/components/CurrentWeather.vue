@@ -9,11 +9,11 @@ const props = defineProps({
 });
 const WEATHER_API = import.meta.env.VITE_WEATHER_API;
 const WEATHER_BASE_URL = import.meta.env.VITE_WEATHER_BASE_URL;
-const units = 'metric';
+const WEATHER_DATA = import.meta.env.VITE_WEATHER_DATA;
 const store = useWeatherStore();
-
 const apiUrl = computed(
-  () => `${WEATHER_BASE_URL}weather?q=${props.city}&appid=${WEATHER_API}&units=${units}`
+  () =>
+    `${WEATHER_BASE_URL}${WEATHER_DATA}weather?q=${props.city}&appid=${WEATHER_API}&units=${store.isCelsius ? 'metric' : 'imperial'}`
 );
 const { data, error, isLoading } = useFetch(apiUrl);
 
@@ -72,7 +72,7 @@ const weatherConditionBackground = computed(() => {
 
 <template>
   <div
-    :class="[weatherBackground, weatherConditionBackground]"
+    :class="[weatherConditionBackground]"
     class="p-5 bg-white overflow-hidden rounded-t-lg border shadow-md space-y-4"
   >
     <div v-if="isLoading" class="animate-pulse text-gray-500">Loading weather data...</div>
@@ -82,7 +82,7 @@ const weatherConditionBackground = computed(() => {
       <div v-if="weatherData" class="my-4">
         <img :src="weatherIconUrl" alt="Weather icon" class="mx-auto w-20 h-20" />
         <h1 class="text-4xl font-semibold text-primary">
-          {{ `${weatherData.main.temp.toFixed(1)}°` }}
+          {{ `${weatherData?.main.temp.toFixed(1)}°` }}
         </h1>
         <h3 class="text-md text-darkGray">{{ weatherData.weather[0].main }}</h3>
         <p class="text-sm text-darkGray">

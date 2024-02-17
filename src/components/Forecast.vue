@@ -9,13 +9,14 @@ const props = defineProps({
 
 const WEATHER_API = import.meta.env.VITE_WEATHER_API;
 const WEATHER_BASE_URL = import.meta.env.VITE_WEATHER_BASE_URL;
-const units = 'metric';
+const WEATHER_DATA = import.meta.env.VITE_WEATHER_DATA;
+const store = useWeatherStore();
 const apiUrl = computed(
-  () => `${WEATHER_BASE_URL}forecast?q=${props.city}&appid=${WEATHER_API}&units=${units}`
+  () =>
+    `${WEATHER_BASE_URL}${WEATHER_DATA}forecast?q=${props.city}&appid=${WEATHER_API}&units=${store.isCelsius ? 'metric' : 'imperial'}`
 );
 
 const { data, error, isLoading } = useFetch(apiUrl);
-const store = useWeatherStore();
 
 watch(
   data,
@@ -109,8 +110,6 @@ const fiveDaysForecastDataList = computed(() => {
                   <p>{{ entry.hour }}</p>
                   <p>{{ entry.temp.toFixed(0) }}°</p>
                 </div>
-
-                <div class="h-1 w-px bg-primary"></div>
               </div>
             </template>
           </div>
