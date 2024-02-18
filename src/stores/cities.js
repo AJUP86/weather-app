@@ -5,9 +5,11 @@ export const useCityStore = defineStore('city', () => {
   const currentCity = ref('');
   const cities = ref([]);
   const selectedCities = ref([]);
+  const isMenuOpen = ref(false);
 
   function updateCities(newCities) {
     cities.value = newCities;
+    console.log(cities.value);
   }
 
   function setCurrentCity(city) {
@@ -19,6 +21,7 @@ export const useCityStore = defineStore('city', () => {
   }
 
   return {
+    isMenuOpen,
     currentCity,
     cities,
     selectedCities,
