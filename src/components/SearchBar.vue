@@ -49,7 +49,7 @@ const selectCity = (city) => {
       class="bg-white appearance-none border-2 border-gray-200 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary w-full"
       :class="props.style"
       type="text"
-      placeholder="Search..."
+      placeholder="Search city..."
     />
 
     <ul
