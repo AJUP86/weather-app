@@ -19,12 +19,18 @@ export const useWeatherStore = defineStore('weather', () => {
   function updateWeatherData(city, newData) {
     weatherDataByCity.value[city] = newData;
   }
+  function deleteWeatherCard(city) {
+    console.log(weatherCities.value);
+    weatherCities.value = weatherCities?.value?.filter((c) => c !== city);
+    console.log(weatherCities.value);
+  }
 
   function updateUnits(newUnit) {
     isCelsius.value = newUnit;
   }
   function updateWeatherCities(newCity) {
     weatherCities.value.push(newCity);
+    console.log(weatherCities.value);
   }
   function updateForecastData(city, newData) {
     forecastDataByCity.value[city] = newData;
@@ -52,6 +58,7 @@ export const useWeatherStore = defineStore('weather', () => {
     weatherDataByCity,
     forecastDataByCity,
     weatherCities,
+    deleteWeatherCard,
     updateUnits,
     updateWeatherData,
     updateForecastData,
