@@ -9,7 +9,6 @@ export const useCityStore = defineStore('city', () => {
 
   function updateCities(newCities) {
     cities.value = newCities;
-    console.log(cities.value);
   }
 
   function setCurrentCity(city) {

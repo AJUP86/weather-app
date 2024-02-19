@@ -10,7 +10,6 @@ const props = defineProps({
 });
 const handleDelete = () => {
   store.deleteWeatherCard(props.city);
-  console.log(props.city);
 };
 </script>
 
