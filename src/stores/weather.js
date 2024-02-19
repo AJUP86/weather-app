@@ -20,9 +20,7 @@ export const useWeatherStore = defineStore('weather', () => {
     weatherDataByCity.value[city] = newData;
   }
   function deleteWeatherCard(city) {
-    console.log(weatherCities.value);
     weatherCities.value = weatherCities?.value?.filter((c) => c !== city);
-    console.log(weatherCities.value);
   }
 
   function updateUnits(newUnit) {
@@ -30,7 +28,6 @@ export const useWeatherStore = defineStore('weather', () => {
   }
   function updateWeatherCities(newCity) {
     weatherCities.value.push(newCity);
-    console.log(weatherCities.value);
   }
   function updateForecastData(city, newData) {
     forecastDataByCity.value[city] = newData;

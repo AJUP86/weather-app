@@ -19,7 +19,6 @@ watch(isCelsius, (newUnit) => {
 <template>
   <nav class="bg-gradient-to-r p-4 text-gray">
     <div class="container mx-auto flex items-center justify-between lg:justify-start relative">
-      <!-- Logo -->
       <span class="font-semibold text-xl tracking-tight">Logo</span>
 
       <!-- Hamburger Menu Icon and Close Icon for Mobile -->
@@ -34,9 +33,7 @@ watch(isCelsius, (newUnit) => {
 
       <!-- Desktop Menu Items -->
       <div class="hidden lg:flex lg:items-center lg:justify-between lg:flex-grow lg:px-10">
-        <!-- Desktop Search Bar -->
         <SearchBar v-if="hasCities" :style="desktopStyle" />
-        <!-- Celsius/Fahrenheit Switch -->
         <label for="toggleC-desktop" class="flex items-center cursor-pointer">
           <div class="relative">
             <input type="checkbox" id="toggleC-desktop" class="sr-only" v-model="isCelsius" />

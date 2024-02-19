@@ -15,7 +15,7 @@ const desktopView = 'max-w-md';
     <div v-if="weatherStore.weatherCities.length > 0" class="flex flex-wrap justify-center gap-4">
       <WeatherCard v-for="city in weatherStore.weatherCities" :key="city" :city="city" />
     </div>
-    <!-- Centered SearchBar if there are no cities -->
+
     <div v-else class="w-full flex justify-center">
       <SearchBar class="w-full max-w-md" :style="desktopView" />
     </div>
