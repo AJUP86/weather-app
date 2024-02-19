@@ -1,8 +1,7 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, watch, defineProps } from 'vue';
 import { useFetch } from '../composables/fetch.js';
 import { useWeatherStore } from '../stores/weather.js';
-import { defineProps } from 'vue';
 import Loading from './Loading.vue';
 
 const props = defineProps({
@@ -74,14 +73,14 @@ const weatherConditionBackground = computed(() => {
 <template>
   <div
     :class="[weatherConditionBackground]"
-    class="p-5 bg-white overflow-hidden rounded-t-lg border shadow-md space-y-4"
+    class="flex justify-center items-center p-5 bg-white overflow-hidden rounded-t-lg lg:rounded-l-lg shadow-md space-y-4"
   >
     <div v-if="isLoading" class="animate-pulse text-gray-500"><Loading /></div>
     <div v-else-if="error" class="text-error">{{ error }}</div>
-    <div v-else class="text-center">
+    <div v-else class="flex flex-col justify-center items-center w-full h-full">
       <h1 class="text-xl font-bold text-primary">{{ props.city }}</h1>
-      <div v-if="weatherData" class="my-4">
-        <img :src="weatherIconUrl" alt="Weather icon" class="mx-auto w-20 h-20" />
+      <div v-if="weatherData" class="flex flex-col items-center justify-center">
+        <img :src="weatherIconUrl" alt="Weather icon" class="w-20 h-20" />
         <h1 class="text-4xl font-semibold text-primary">
           {{ `${weatherData?.main.temp.toFixed(1)}°` }}
         </h1>

@@ -90,30 +90,22 @@ const fiveDaysForecastDataList = computed(() => {
 </script>
 <template>
   <div
-    class="flex flex-col items-center justify-center p-4 bg-white bg-opacity-75 rounded-b-lg shadow-md space-y-4"
+    class="flex flex-col items-center justify-center p-4 bg-white bg-opacity-75 rounded-r-lg shadow-md space-y-4"
   >
     <div v-if="isLoading" class="text-gray-500">Loading Forecast...</div>
     <div v-else-if="error" class="text-red-500">{{ error }}</div>
     <div v-else class="w-full">
       <h2 class="text-lg md:text-xl lg:text-2xl">24 hours forecast.</h2>
-      <div class="flex space-x-2 overflow-x-auto py-4">
-        <div class="flex items-center space-x-1">
-          <div class="flex space-x-4 min-w-max">
-            <template
-              v-for="entry in todayForecastDataList"
-              :key="entry.id"
-              class="flex-none w-1/6 md:w-1/8 lg:w-1/10 flex flex-col items-center p-2"
-            >
-              <div class="flex flex-col items-center">
-                <img :src="entry.icon" alt="Weather icon" class="w-6 h-6" />
-                <div class="text-xs sm:text-sm md:text-base">
-                  <p>{{ entry.hour }}</p>
-                  <p>{{ entry.temp.toFixed(0) }}°</p>
-                </div>
-              </div>
-            </template>
+      <div class="flex justify-start md:justify-between space-x-2 overflow-x-auto py-4 w-full">
+        <template v-for="entry in todayForecastDataList" :key="entry.id">
+          <div class="flex-none md:flex-grow flex flex-col items-center p-2">
+            <img :src="entry.icon" alt="Weather icon" class="w-6 h-6" />
+            <div class="text-xs sm:text-sm md:text-base">
+              <p>{{ entry.hour }}</p>
+              <p>{{ entry.temp.toFixed(0) }}°</p>
+            </div>
           </div>
-        </div>
+        </template>
       </div>
 
       <h2 class="text-lg md:text-xl lg:text-2xl">5 days forecast</h2>

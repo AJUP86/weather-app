@@ -18,9 +18,11 @@ export default {
         darkGray: '#95a5a6', // Dark gray
         border: '#dcdde1' // Border color
       },
-      backgroundImage: {
-        'gradient-to-r': 'linear-gradient(to right, var(--color-background), var(--color-light))'
-      }
+      backgroundImage: (theme) => ({
+        'gradient-to-r': 'linear-gradient(to right, var(--color-background), var(--color-light))',
+        'gradient-primary': 'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)',
+        'gradient-secondary': 'linear-gradient(to right, #e0c3fc 0%, #8ec5fc 100%)'
+      })
     }
   },
   plugins: []
