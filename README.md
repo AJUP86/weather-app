@@ -21,7 +21,7 @@ To set up the Weather App in your local environment, follow these steps:
 1. **Clone the Repository**
 
    ```sh
-   git clone https://github.com/your-username/weather-app.git
+   git clone https://github.com/AJUP86/weather-app
    cd weather-app
    ```
 
@@ -64,11 +64,3 @@ To set up the Weather App in your local environment, follow these steps:
 ## Contributions
 
 We welcome contributions to the Weather App! Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests to us.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Remember to replace `https://github.com/your-username/weather-app.git` with your actual repository URL and `your_openweathermap_api_key` with your actual API key. If you have a contributing guide or license file, make sure they are linked correctly in the README as well.
