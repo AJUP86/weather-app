@@ -2,7 +2,6 @@
 import WeatherCard from './components/WeatherCard.vue';
 import Navigation from './components/Navigation.vue';
 import { useWeatherStore } from './stores/weather';
-import { useCityStore } from './stores/cities';
 import SearchBar from './components/SearchBar.vue';
 const weatherStore = useWeatherStore();
 const desktopView = 'max-w-md';

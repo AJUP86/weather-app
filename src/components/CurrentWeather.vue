@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue';
 import { useFetch } from '../composables/fetch.js';
 import { useWeatherStore } from '../stores/weather.js';
 import { defineProps } from 'vue';
+import Loading from './Loading.vue';
 
 const props = defineProps({
   city: String
@@ -75,7 +76,7 @@ const weatherConditionBackground = computed(() => {
     :class="[weatherConditionBackground]"
     class="p-5 bg-white overflow-hidden rounded-t-lg border shadow-md space-y-4"
   >
-    <div v-if="isLoading" class="animate-pulse text-gray-500">Loading weather data...</div>
+    <div v-if="isLoading" class="animate-pulse text-gray-500"><Loading /></div>
     <div v-else-if="error" class="text-error">{{ error }}</div>
     <div v-else class="text-center">
       <h1 class="text-xl font-bold text-primary">{{ props.city }}</h1>

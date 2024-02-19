@@ -56,12 +56,11 @@ watch(isCelsius, (newUnit) => {
           'flex flex-col items-center': cityStore.isMenuOpen,
           hidden: !cityStore.isMenuOpen
         }"
-        class="fixed inset-0 bg-opacity-30 bg-primary p-4 lg:hidden z-20 transition duration-300 ease-in-out flex-col items-center justify-center"
+        class="fixed inset-0 bg-opacity-80 bg-white p-4 lg:hidden z-20 transition duration-300 ease-in-out flex-col items-center justify-center"
       >
-        <!-- Mobile Search Bar  -->
-        <div v-if="hasCities" class="w-full max-w-xs px-4 py-2 flex flex-col items-center">
+        <div v-if="hasCities" class="w-full px-4 py-2 flex items-center justify-between">
           <SearchBar :style="mobileStyle" />
-          <label for="toggleC-mobile" class="flex items-center cursor-pointer mt-4">
+          <label for="toggleC-mobile" class="flex items-center cursor-pointer">
             <div class="relative">
               <input type="checkbox" id="toggleC-mobile" class="sr-only" v-model="isCelsius" />
               <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
@@ -70,11 +69,9 @@ watch(isCelsius, (newUnit) => {
                 :class="{ 'translate-x-6': !isCelsius }"
               ></div>
             </div>
-            <div class="ml-3 text-white">°C / °F</div>
+            <div class="ml-3 text-darkgrey">°C / °F</div>
           </label>
         </div>
-
-        <!-- Celsius/Fahrenheit Switch  -->
       </div>
     </div>
   </nav>
