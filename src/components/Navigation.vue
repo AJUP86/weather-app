@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useWeatherStore } from '@/stores/weather';
 import { useCityStore } from '@/stores/cities';
 import SearchBar from './SearchBar.vue';
@@ -11,20 +11,20 @@ const desktopStyle = 'max-w-md';
 const mobileStyle = '';
 
 const hasCities = computed(() => weatherStore.weatherCities.length > 0);
-watch(isCelsius, (newUnit) => {
-  weatherStore.updateUnits(newUnit);
-});
-</script>
 
+const toggleMenu = () => {
+  cityStore.isMenuOpen = !cityStore.isMenuOpen;
+};
+</script>
 <template>
-  <nav class="bg-gradient-to-r p-4 text-gray">
+  <nav class="bg-gradient-secondary p-4 text-gray">
     <div class="container mx-auto flex items-center justify-between lg:justify-start relative">
-      <span class="font-semibold text-xl tracking-tight">Logo</span>
+      <span class="font-semibold text-xl tracking-tight text-white">Logo</span>
 
       <!-- Hamburger Menu Icon and Close Icon for Mobile -->
       <button
-        @click="cityStore.isMenuOpen = !cityStore.isMenuOpen"
-        class="lg:hidden z-30 hover:text-black hover:no-underline hover:bg-transparent"
+        @click="toggleMenu"
+        class="lg:hidden z-30 text-white hover:text-black hover:no-underline hover:bg-transparent"
       >
         <span class="material-symbols-outlined">
           {{ cityStore.isMenuOpen ? 'close' : 'menu' }}
@@ -43,7 +43,7 @@ watch(isCelsius, (newUnit) => {
               :class="{ 'translate-x-6': !isCelsius }"
             ></div>
           </div>
-          <div class="ml-3">°C / °F</div>
+          <div class="ml-3 text-white">°C / °F</div>
         </label>
       </div>
 
@@ -73,3 +73,7 @@ watch(isCelsius, (newUnit) => {
     </div>
   </nav>
 </template>
+
+<style scoped>
+/* Add any additional styling here */
+</style>
