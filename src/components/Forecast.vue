@@ -110,25 +110,22 @@ const fiveDaysForecastDataList = computed(() => {
         </template>
       </div>
 
+      <!-- 5 days forecast -->
       <h2 class="text-lg md:text-xl lg:text-2xl text-onBackground">5 days forecast</h2>
       <div class="flex flex-col divide-y divide-primary">
-        <!-- 5 days forecast -->
-        <h2 class="text-lg md:text-xl lg:text-2xl text-onBackground">5 days forecast</h2>
-        <div class="flex flex-col divide-y divide-primary">
-          <div
-            v-for="day in fiveDaysForecastDataList"
-            :key="day.id"
-            class="py-2 flex justify-between items-center"
-          >
-            <div class="flex items-center text-onBackground">
-              <p class="text-lg font-medium mr-4">{{ day.day }}</p>
-              <p class="text-sm">{{ `Min ${day.min.toFixed(1)}°` }}</p>
-              <span class="mx-1 text-primary">|</span>
-              <p class="text-sm">{{ `Max ${day.max.toFixed(1)}°` }}</p>
-            </div>
-            <!-- Adjusted size of weather icons -->
-            <img :src="day.icon" alt="Weather icon" class="w-14 h-14" />
+        <div
+          v-for="day in fiveDaysForecastDataList"
+          :key="day.id"
+          class="py-2 flex justify-between items-center"
+        >
+          <div class="flex items-center text-onBackground">
+            <p class="text-lg font-medium mr-4">{{ day.day }}</p>
+            <p class="text-sm">{{ `Min ${day.min.toFixed(1)}°` }}</p>
+            <span class="mx-1 text-primary">|</span>
+            <p class="text-sm">{{ `Max ${day.max.toFixed(1)}°` }}</p>
           </div>
+          <!-- Adjusted size of weather icons -->
+          <img :src="day.icon" alt="Weather icon" class="w-14 h-14" />
         </div>
       </div>
     </div>
