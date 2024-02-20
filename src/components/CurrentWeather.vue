@@ -32,7 +32,7 @@ watch(
 
 const weatherData = computed(() => store.getWeatherData(props.city));
 const weatherIconUrl = computed(() => store.getWeatherIconUrl(props.city));
-
+const cityName = computed(() => weatherData.value?.name || props.city);
 // Time of day determination logic
 const isDay = computed(() => {
   if (!weatherData.value) return true;
@@ -86,8 +86,8 @@ const weatherConditionBackground = computed(() => {
 
 <template>
   <div
-    :class="[weatherConditionBackground]"
-    class="flex justify-center items-center p-5 overflow-hidden rounded-lg shadow-md space-y-4 transition-all"
+    :class="[weatherConditionBackground, textColorOnBackground]"
+    class="flex justify-center items-center p-5 overflow-hidden rounded-lg shadow-md space-y-4 w-full h-full transition-all"
   >
     <div v-if="isLoading" class="animate-pulse text-gray-500">
       <Loading />
@@ -96,7 +96,7 @@ const weatherConditionBackground = computed(() => {
       {{ error.message }}
     </div>
     <div v-else class="flex flex-col justify-center items-center w-full h-full">
-      <h1 :class="textColorOnBackground" class="text-2xl font-bold">{{ props.city }}</h1>
+      <h1 :class="textColorOnBackground" class="text-2xl font-bold">{{ cityName }}</h1>
       <div v-if="weatherData" class="flex flex-col items-center justify-center">
         <img :src="weatherIconUrl" :alt="weatherData.weather[0].description" class="w-20 h-20" />
         <h2 :class="textColorOnBackground" class="text-5xl font-semibold my-2">
