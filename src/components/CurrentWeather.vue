@@ -7,14 +7,17 @@ import Loading from './Loading.vue';
 const props = defineProps({
   city: String
 });
+
 const WEATHER_API = import.meta.env.VITE_WEATHER_API;
 const WEATHER_BASE_URL = import.meta.env.VITE_WEATHER_BASE_URL;
 const WEATHER_DATA = import.meta.env.VITE_WEATHER_DATA;
 const store = useWeatherStore();
+
 const apiUrl = computed(
   () =>
     `${WEATHER_BASE_URL}${WEATHER_DATA}weather?q=${props.city}&appid=${WEATHER_API}&units=${store.isCelsius ? 'metric' : 'imperial'}`
 );
+
 const { data, error, isLoading } = useFetch(apiUrl);
 
 watch(
@@ -30,42 +33,53 @@ watch(
 const weatherData = computed(() => store.getWeatherData(props.city));
 const weatherIconUrl = computed(() => store.getWeatherIconUrl(props.city));
 
+// Time of day determination logic
 const isDay = computed(() => {
   if (!weatherData.value) return true;
   const sunrise = new Date(weatherData.value.sys.sunrise * 1000);
   const sunset = new Date(weatherData.value.sys.sunset * 1000);
   const currentTime = new Date();
-  return currentTime > sunrise && currentTime < sunset;
+  return currentTime >= sunrise && currentTime <= sunset;
 });
 
-const weatherBackground = computed(() => {
-  return isDay.value ? 'bg-day' : 'bg-night';
+// Weather condition and background logic
+const textColorOnBackground = computed(() => {
+  const isBackgroundDark = [
+    'bg-rain-night',
+    'bg-clear-night',
+    'bg-thunderstorm-night',
+    'bg-mist-night',
+    'bg-clouds-night'
+  ].includes(weatherConditionBackground.value);
+  return isBackgroundDark ? 'text-onDark' : 'text-onLight';
 });
-
-const weatherCondition = computed(() => {
-  if (!weatherData.value || !weatherData.value.weather || weatherData.value.weather.length === 0)
-    return '';
-  return weatherData.value.weather[0].main.toLowerCase();
-});
-
+const weatherCondition = computed(() => weatherData.value?.weather[0]?.main.toLowerCase() || '');
 const weatherConditionBackground = computed(() => {
   switch (weatherCondition.value) {
     case 'rain':
-      return 'bg-rain';
+      return isDay.value ? 'bg-rain-day' : 'bg-rain-night';
     case 'clear':
-      return 'bg-clear-sky';
+      return isDay.value ? 'bg-clear-day' : 'bg-clear-night';
     case 'snow':
-      return 'bg-snow';
+      return isDay.value ? 'bg-snow-day' : 'bg-snow-night';
     case 'clouds':
-      return 'bg-scattered-clouds';
+      return isDay.value ? 'bg-clouds-day' : 'bg-clouds-night';
     case 'thunderstorm':
-      return 'bg-thunderstorm';
+      return isDay.value ? 'bg-thunderstorm-day' : 'bg-thunderstorm-night';
     case 'drizzle':
-      return 'bg-shower-rain';
-    case 'mist' || 'smoke' || 'haze' || 'dust' || 'fog' || 'sand' || 'ash' || 'squall' || 'tornado':
-      return 'bg-mist';
+      return isDay.value ? 'bg-drizzle-day' : 'bg-drizzle-night';
+    case 'mist':
+    case 'smoke':
+    case 'haze':
+    case 'dust':
+    case 'fog':
+    case 'sand':
+    case 'ash':
+    case 'squall':
+    case 'tornado':
+      return isDay.value ? 'bg-mist-day' : 'bg-mist-night';
     default:
-      return '';
+      return isDay.value ? 'bg-default-day' : 'bg-default-night';
   }
 });
 </script>
@@ -73,22 +87,28 @@ const weatherConditionBackground = computed(() => {
 <template>
   <div
     :class="[weatherConditionBackground]"
-    class="flex justify-center items-center p-5 bg-white overflow-hidden rounded-t-lg lg:rounded-l-lg shadow-md space-y-4"
+    class="flex justify-center items-center p-5 overflow-hidden rounded-lg shadow-md space-y-4 transition-all"
   >
-    <div v-if="isLoading" class="animate-pulse text-gray-500"><Loading /></div>
-    <div v-else-if="error" class="text-error">{{ error }}</div>
+    <div v-if="isLoading" class="animate-pulse text-gray-500">
+      <Loading />
+    </div>
+    <div v-else-if="error" class="text-error">
+      {{ error.message }}
+    </div>
     <div v-else class="flex flex-col justify-center items-center w-full h-full">
-      <h1 class="text-xl font-bold text-primary">{{ props.city }}</h1>
+      <h1 :class="textColorOnBackground" class="text-2xl font-bold">{{ props.city }}</h1>
       <div v-if="weatherData" class="flex flex-col items-center justify-center">
-        <img :src="weatherIconUrl" alt="Weather icon" class="w-20 h-20" />
-        <h1 class="text-4xl font-semibold text-primary">
-          {{ `${weatherData?.main.temp.toFixed(1)}°` }}
-        </h1>
-        <h3 class="text-md text-darkGray">{{ weatherData.weather[0].main }}</h3>
-        <p class="text-sm text-darkGray">
-          {{
-            `L:${weatherData.main.temp_min.toFixed(1)}° H:${weatherData.main.temp_max.toFixed(1)}°`
-          }}
+        <img :src="weatherIconUrl" :alt="weatherData.weather[0].description" class="w-20 h-20" />
+        <h2 :class="textColorOnBackground" class="text-5xl font-semibold my-2">
+          {{ weatherData.main.temp.toFixed(1) }}°
+        </h2>
+
+        <p :class="textColorOnBackground" class="text-xl">
+          {{ weatherData.weather[0].main }}
+        </p>
+        <p :class="textColorOnBackground" class="text-md">
+          L: {{ weatherData.main.temp_min.toFixed(1) }}° H:
+          {{ weatherData.main.temp_max.toFixed(1) }}°
         </p>
       </div>
       <div v-else>No weather data available.</div>
