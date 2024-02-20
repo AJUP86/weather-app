@@ -22,6 +22,7 @@ const apiUrl = computed(() => {
   }
   return null;
 });
+
 const cityAlreadyAdded = computed(() => {
   return weatherStore.weatherCities.includes(searchQuery.value.toLowerCase());
 });
@@ -33,6 +34,7 @@ watch(data, (newData) => {
     store.updateCities(newData);
   }
 });
+
 const searchCity = (e) => {
   searchQuery.value = e.target.value;
 };
@@ -55,11 +57,11 @@ watch(searchQuery, () => {
 </script>
 
 <template>
-  <div class="relative w-3/4">
+  <div class="relative w-full">
     <input
       @input="searchCity"
       :value="searchQuery"
-      class="bg-white appearance-none border-2 border-gray-600 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary w-full"
+      class="bg-white appearance-none border-2 border-gray-600 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary w-full"
       :class="props.style"
       type="text"
       placeholder="Search city..."
@@ -73,9 +75,9 @@ watch(searchQuery, () => {
         v-for="city in store.cities"
         :key="city.lat"
         @click="selectCity(city.name)"
-        class="px-4 py-2 hover:bg-gray-100"
+        class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
       >
-        <p>{{ city.name }}, {{ city.country }}, {{ city.state }}.</p>
+        <p class="text-gray-800">{{ city.name }}, {{ city.country }}, {{ city.state }}.</p>
       </li>
     </ul>
   </div>

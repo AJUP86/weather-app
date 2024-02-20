@@ -90,48 +90,91 @@ const fiveDaysForecastDataList = computed(() => {
 </script>
 <template>
   <div
-    class="flex flex-col items-center justify-center p-4 bg-white bg-opacity-75 rounded-b-lg shadow-md space-y-4"
+    class="flex flex-col items-center justify-center p-4 bg-white bg-opacity-75 rounded-lg shadow-md space-y-4 w-full"
   >
     <div v-if="isLoading" class="text-gray-500">Loading Forecast...</div>
-    <div v-else-if="error" class="text-red-500">{{ error }}</div>
+    <div v-else-if="error" class="text-error">{{ error }}</div>
     <div v-else class="w-full">
-      <h2 class="text-lg md:text-xl lg:text-2xl">24 hours forecast.</h2>
-      <div class="flex space-x-2 overflow-x-auto py-4">
-        <div class="flex items-center space-x-1">
-          <div class="flex space-x-4 min-w-max">
-            <template
-              v-for="entry in todayForecastDataList"
-              :key="entry.id"
-              class="flex-none w-1/6 md:w-1/8 lg:w-1/10 flex flex-col items-center p-2"
-            >
-              <div class="flex flex-col items-center">
-                <img :src="entry.icon" alt="Weather icon" class="w-6 h-6" />
-                <div class="text-xs sm:text-sm md:text-base">
-                  <p>{{ entry.hour }}</p>
-                  <p>{{ entry.temp.toFixed(0) }}°</p>
-                </div>
-              </div>
-            </template>
+      <h2 class="text-lg md:text-xl lg:text-2xl text-onBackground">24 hours forecast.</h2>
+      <!-- Horizontal scroll container -->
+      <div class="flex overflow-x-auto py-4 w-full">
+        <!-- Inline forecast items -->
+        <template v-for="entry in todayForecastDataList" :key="entry.id">
+          <div class="flex-none flex flex-col items-center p-2">
+            <img :src="entry.icon" alt="Weather icon" class="w-14 h-14" />
+            <div class="text-xs sm:text-sm md:text-base text-onBackground">
+              <p>{{ entry.hour }}h</p>
+              <p>{{ entry.temp.toFixed(0) }}°</p>
+            </div>
           </div>
-        </div>
+        </template>
       </div>
 
-      <h2 class="text-lg md:text-xl lg:text-2xl">5 days forecast</h2>
-      <div class="flex flex-col divide-y divide-gray-200">
+      <!-- 5 days forecast -->
+      <h2 class="text-lg md:text-xl lg:text-2xl text-onBackground">5 days forecast</h2>
+      <div class="flex flex-col divide-y divide-primary">
         <div
           v-for="day in fiveDaysForecastDataList"
           :key="day.id"
           class="py-2 flex justify-between items-center"
         >
-          <div class="flex items-center">
-            <p class="text-lg font-medium text-gray-700 mr-4">{{ day.day }}</p>
-            <p class="text-sm text-gray-600">{{ `Min ${day.min.toFixed(1)}°` }}</p>
-            <span class="mx-1 text-gray-500">|</span>
-            <p class="text-sm text-gray-600">{{ `Max ${day.max.toFixed(1)}°` }}</p>
+          <div class="flex items-center text-onBackground">
+            <p class="text-lg font-medium mr-4">{{ day.day }}</p>
+            <p class="text-sm">{{ `Min ${day.min.toFixed(1)}°` }}</p>
+            <span class="mx-1 text-primary">|</span>
+            <p class="text-sm">{{ `Max ${day.max.toFixed(1)}°` }}</p>
           </div>
-          <img :src="day.icon" alt="Weather icon" class="w-10 h-10" />
+          <!-- Adjusted size of weather icons -->
+          <img :src="day.icon" alt="Weather icon" class="w-14 h-14" />
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style>
+/* Ensure images don't get cropped or stretched */
+img {
+  object-fit: contain;
+  /* Adjust the size of the icons for better visibility */
+  width: 3rem; /* Adjust the size as needed */
+  height: 3rem; /* Adjust the size as needed */
+}
+
+/* For a responsive number of columns in the 24-hour forecast */
+@media (min-width: 640px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+/* For larger screens, adjust as needed */
+@media (min-width: 1024px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  /* Adjust the number of columns for larger screens */
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  /* For even larger screens, display more columns */
+  .grid-cols-4 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+</style>
