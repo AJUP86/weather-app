@@ -89,29 +89,41 @@ const weatherConditionBackground = computed(() => {
     :class="[weatherConditionBackground, textColorOnBackground]"
     class="flex justify-center items-center p-5 overflow-hidden rounded-lg shadow-md space-y-4 w-full h-full transition-all"
   >
-    <div v-if="isLoading" class="animate-pulse text-gray-500">
-      <Loading />
-    </div>
-    <div v-else-if="error" class="text-error">
-      {{ error.message }}
-    </div>
-    <div v-else class="flex flex-col justify-center items-center w-full h-full">
-      <h1 :class="textColorOnBackground" class="text-2xl font-bold">{{ cityName }}</h1>
-      <div v-if="weatherData" class="flex flex-col items-center justify-center">
-        <img :src="weatherIconUrl" :alt="weatherData.weather[0].description" class="w-20 h-20" />
-        <h2 :class="textColorOnBackground" class="text-5xl font-semibold my-2">
-          {{ weatherData.main.temp.toFixed(1) }}°
-        </h2>
-
-        <p :class="textColorOnBackground" class="text-xl">
-          {{ weatherData.weather[0].main }}
-        </p>
-        <p :class="textColorOnBackground" class="text-md">
-          L: {{ weatherData.main.temp_min.toFixed(1) }}° H:
-          {{ weatherData.main.temp_max.toFixed(1) }}°
-        </p>
+    <Transition name="fade" mode="out-in">
+      <div v-if="isLoading" class="flex justify-center items-center">
+        <Loading />
       </div>
-      <div v-else>No weather data available.</div>
-    </div>
+      <div v-else-if="error" class="text-error">
+        {{ error.message }}
+      </div>
+      <div v-else class="flex flex-col justify-center items-center w-full h-full">
+        <h1 :class="textColorOnBackground" class="text-2xl font-bold">{{ cityName }}</h1>
+        <div v-if="weatherData" class="flex flex-col items-center justify-center">
+          <img :src="weatherIconUrl" :alt="weatherData.weather[0].description" class="w-20 h-20" />
+          <h2 :class="textColorOnBackground" class="text-5xl font-semibold my-2">
+            {{ weatherData.main.temp.toFixed(1) }}°
+          </h2>
+
+          <p :class="textColorOnBackground" class="text-xl">
+            {{ weatherData.weather[0].main }}
+          </p>
+          <p :class="textColorOnBackground" class="text-md">
+            L: {{ weatherData.main.temp_min.toFixed(1) }}° H:
+            {{ weatherData.main.temp_max.toFixed(1) }}°
+          </p>
+        </div>
+        <div v-else>No weather data available.</div>
+      </div>
+    </Transition>
   </div>
 </template>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+</style>

@@ -46,4 +46,38 @@ const handleDelete = () => {
 .group:hover .delete-button {
   opacity: 1;
 }
+
+.mx-auto {
+  max-width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+/* Add media queries for larger screens */
+@media (min-width: 1024px) {
+  /* Adjust the breakpoint as needed */
+  .mx-auto {
+    max-width: 80%; /* Or any specific size you prefer */
+  }
+
+  .weather-card {
+    padding: 2rem; /* Increased padding */
+    flex-direction: row; /* Ensure it's row-oriented on larger screens */
+  }
+
+  /* Optionally adjust the flex property for children if needed */
+  .weather-card > div {
+    flex: 1; /* Adjust the flex-basis as needed for children */
+  }
+}
+
+/* Additional adjustments for larger screens */
+@media (min-width: 1440px) {
+  .mx-auto {
+    max-width: 75%; /* Even larger on very wide screens */
+  }
+  /* Further customize as needed */
+}
 </style>
