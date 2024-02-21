@@ -1,7 +1,3 @@
-Certainly! Below is an example of a README file for your weather app:
-
----
-
 # Weather App
 
 Welcome to the Weather App, your solution for real-time weather updates across the globe. Our app provides you with detailed current weather conditions, a comprehensive 24-hour forecast, and a 5-day weather outlook to help you plan your week ahead.
