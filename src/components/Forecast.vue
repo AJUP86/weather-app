@@ -124,7 +124,6 @@ const fiveDaysForecastDataList = computed(() => {
             <span class="mx-1 text-primary">|</span>
             <p class="text-sm">{{ `Max ${day.max.toFixed(1)}°` }}</p>
           </div>
-          <!-- Adjusted size of weather icons -->
           <img :src="day.icon" alt="Weather icon" class="w-14 h-14" />
         </div>
       </div>
@@ -133,15 +132,12 @@ const fiveDaysForecastDataList = computed(() => {
 </template>
 
 <style>
-/* Ensure images don't get cropped or stretched */
 img {
   object-fit: contain;
-  /* Adjust the size of the icons for better visibility */
-  width: 3rem; /* Adjust the size as needed */
-  height: 3rem; /* Adjust the size as needed */
+  width: 3rem;
+  height: 3rem;
 }
 
-/* For a responsive number of columns in the 24-hour forecast */
 @media (min-width: 640px) {
   .grid-cols-4 {
     grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -154,7 +150,6 @@ img {
   }
 }
 
-/* For larger screens, adjust as needed */
 @media (min-width: 1024px) {
   .grid-cols-4 {
     grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -165,14 +160,12 @@ img {
 }
 
 @media (min-width: 640px) {
-  /* Adjust the number of columns for larger screens */
   .grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
-  /* For even larger screens, display more columns */
   .grid-cols-4 {
     grid-template-columns: repeat(8, minmax(0, 1fr));
   }
