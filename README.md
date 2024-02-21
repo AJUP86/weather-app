@@ -61,6 +61,3 @@ To set up the Weather App in your local environment, follow these steps:
 
    This command will generate a `dist` folder that you can serve using a static server.
 
-## Contributions
-
-We welcome contributions to the Weather App! Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests to us.
